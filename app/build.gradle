@@ -3,8 +3,21 @@ plugins {
     id 'kotlin-android'
 }
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdk 31
+
+    signingConfigs {
+        production {
+            storePassword keystoreProperties['storePassword']
+            keyPassword keystoreProperties['keyPassword']
+            keyAlias keystoreProperties['keyAlias']
+            storeFile file(keystoreProperties['storeFile'])
+        }
+    }
 
     defaultConfig {
         applicationId "com.example.cleancoding"
@@ -20,6 +33,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.production
         }
     }
     compileOptions {
