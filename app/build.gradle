@@ -7,6 +7,10 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+def localPropertiesFile = rootProject.file("local.properties")
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
 android {
     compileSdk 31
 
@@ -27,15 +31,53 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "MARVEL_PRIVATE_API_KEY", localProperties['privateKey'])
+        buildConfigField("String", "MARVEL_PUBLIC_API_KEY", localProperties['publicKey'])
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.production
         }
     }
+
+    flavorDimensions "environnement"
+    productFlavors {
+        development {
+            dimension "environnement"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            ext {
+                baseUrl = "https://gateway.marvel.com:443/"
+            }
+        }
+        production {
+            dimension "environnement"
+            applicationIdSuffix ".prod"
+            versionNameSuffix "-prod"
+            ext {
+                baseUrl = "https://gateway.marvel.com:443/"
+            }
+        }
+        applicationVariants.all { variant ->
+
+            def dimensions = variant.productFlavors
+            def environment = dimensions[0]
+
+            def baseUrl = environment.ext.baseUrl
+
+            variant.buildConfigField "String", "BASE_URL", "\"$baseUrl\""
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
