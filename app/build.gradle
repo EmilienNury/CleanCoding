@@ -38,8 +38,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "MARVEL_PRIVATE_API_KEY", marvelApiKeysProperties['privateKey'])
-        buildConfigField("String", "MARVEL_PUBLIC_API_KEY", marvelApiKeysProperties['publicKey'])
+        buildConfigField "String", "MARVEL_PRIVATE_API_KEY", "\"${marvelApiKeysProperties['privateKey']}\""
+        buildConfigField "String", "MARVEL_PUBLIC_API_KEY", "\"${marvelApiKeysProperties['publicKey']}\""
     }
 
     buildTypes {
@@ -56,32 +56,23 @@ android {
     }
 
     flavorDimensions "environnement"
+
     productFlavors {
+
         development {
             dimension "environnement"
             applicationIdSuffix ".dev"
             versionNameSuffix "-dev"
-            ext {
-                baseUrl = "https://gateway.marvel.com:443/"
-            }
+            buildConfigField "String", "BASE_URL", "\"https://gateway.marvel.com:443/\""
         }
+
         production {
             dimension "environnement"
             applicationIdSuffix ".prod"
             versionNameSuffix "-prod"
-            ext {
-                baseUrl = "https://gateway.marvel.com:443/"
-            }
+            buildConfigField "String", "BASE_URL", "\"https://gateway.marvel.com:443/\""
         }
-        applicationVariants.all { variant ->
 
-            def dimensions = variant.productFlavors
-            def environment = dimensions[0]
-
-            def baseUrl = environment.ext.baseUrl
-
-            variant.buildConfigField "String", "BASE_URL", "\"$baseUrl\""
-        }
     }
 
     compileOptions {
