@@ -1,4 +1,4 @@
-package com.example.cleancoding
+package fr.emiliennury.cleancoding
 
 import org.junit.Test
 

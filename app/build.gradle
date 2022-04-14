@@ -7,9 +7,9 @@ def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-def localPropertiesFile = rootProject.file("local.properties")
-def localProperties = new Properties()
-localProperties.load(new FileInputStream(localPropertiesFile))
+def marvelApiKeysPropertiesFile = rootProject.file("marvel_api_keys.properties")
+def marvelApiKeysProperties = new Properties()
+marvelApiKeysProperties.load(new FileInputStream(marvelApiKeysPropertiesFile))
 
 android {
     compileSdk 31
@@ -24,16 +24,22 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.cleancoding"
+        applicationId "fr.emiliennury.cleancoding"
         minSdk 21
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+
+        def major = Integer.parseInt(property("version.major"))
+        def minor = Integer.parseInt(property("version.minor"))
+        def patch = Integer.parseInt(property("version.patch"))
+        def buildNumber = Integer.parseInt(property("version.buildNumber"))
+
+        versionCode buildNumber
+        versionName "${major}.${minor}.${patch}-b${buildNumber}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "MARVEL_PRIVATE_API_KEY", localProperties['privateKey'])
-        buildConfigField("String", "MARVEL_PUBLIC_API_KEY", localProperties['publicKey'])
+        buildConfigField("String", "MARVEL_PRIVATE_API_KEY", marvelApiKeysProperties['privateKey'])
+        buildConfigField("String", "MARVEL_PUBLIC_API_KEY", marvelApiKeysProperties['publicKey'])
     }
 
     buildTypes {
@@ -92,6 +98,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

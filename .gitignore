@@ -13,5 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+marvel_api_keys.properties
 keystore.properties
 keystore.p12

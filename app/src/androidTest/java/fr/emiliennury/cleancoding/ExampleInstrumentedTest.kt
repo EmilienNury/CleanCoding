@@ -1,4 +1,4 @@
-package com.example.cleancoding
+package fr.emiliennury.cleancoding
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.cleancoding", appContext.packageName)
+        assertEquals("fr.emiliennury.cleancoding", appContext.packageName)
     }
 }
