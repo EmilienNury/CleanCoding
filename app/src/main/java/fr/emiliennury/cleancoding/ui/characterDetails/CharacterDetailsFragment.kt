@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import fr.emiliennury.cleancoding.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CharacterDetails : Fragment() {
+class CharacterDetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = CharacterDetails()
-    }
-
-    private lateinit var viewModel: CharacterDetailsViewModel
+    private val viewModel: CharacterDetailsViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,10 +20,9 @@ class CharacterDetails : Fragment() {
         return inflater.inflate(R.layout.character_details_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CharacterDetailsViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel
     }
 
 }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/characterList"
-        android:name="fr.emiliennury.cleancoding.ui.characterList.CharacterList"
+        android:name="fr.emiliennury.cleancoding.ui.characterList.CharacterListFragment"
         android:label="character_list_fragment"
         tools:layout="@layout/character_list_fragment" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetails"
-        android:name="fr.emiliennury.cleancoding.ui.characterDetails.CharacterDetails"
+        android:name="fr.emiliennury.cleancoding.ui.characterDetails.CharacterDetailsFragment"
         android:label="character_details_fragment"
         tools:layout="@layout/character_details_fragment" />
 </navigation>
